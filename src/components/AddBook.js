@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
 import {http} from '../interceptor';
+import {GET_AUTHORS, ADD_BOOK} from '../queries/queries';
 
 
-const GET_AUTHORS = `
-    {
-        authors {
-            name
-            id
-        }
-    }
-`;
 
 class AddBook extends Component {
     constructor(props) {
         super(props);
         this.state = {
             authorList: [],
-            isFetch: true
+            isFetch: true,
+            name: '',
+            genre: '',
+            authorId: ''
         }
     }
 
@@ -42,26 +38,40 @@ class AddBook extends Component {
         }
     }
 
+    submitForm(e){
+        e.preventDefault()
+        console.log(this.state);
+        http.post('', {
+            query: ADD_BOOK
+            .replace('$name', `"${this.state.name}"`)
+            .replace('$genre', `"${this.state.genre}"`)
+            .replace('$authorId', `"${this.state.authorId}"`),
+        }).then(result => {
+            console.log('res---', result)
+    }).catch(err => {
+        console.log('err', err)
+    })
+}
+
     render(){
         return(
             <form id="add-book">
-                <div className="field">
+                 <div className="field">
                     <label>Book name:</label>
-                    <input type="text" />
+                    <input type="text" onChange={ (e) => this.setState({ name: e.target.value }) } />
                 </div>
                 <div className="field">
                     <label>Genre:</label>
-                    <input type="text" />
+                    <input type="text" onChange={ (e) => this.setState({ genre: e.target.value }) } />
                 </div>
                 <div className="field">
                     <label>Author:</label>
-                    <select>
+                    <select onChange={ (e) => this.setState({ authorId: e.target.value }) } >
                         <option>Select author</option>
                         { this.displayAuthors() }
                     </select>
                 </div>
-                <button>+</button>
-
+                <button onClick= {(e) => this.submitForm(e)}>+</button>
             </form>
         );
     }

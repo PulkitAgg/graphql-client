@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import {http} from '../interceptor';
+import {GET_BOOKS} from '../queries/queries';
 
-const GET_BOOKS = `
-    {
-        books {
-            name,
-            id
-        }
-    }
-`;
 
 class BookList extends Component {
   constructor(props) {
