@@ -27,7 +27,7 @@ const ADD_STAR = `
 `;
 
 const ADD_BOOK = `
-    mutation {
+    mutation ($name: String!, $genre: String!, $authorId: ID!) {
         addBook(name: $name, genre: $genre, authorId: $authorId) {
             name,
             id
