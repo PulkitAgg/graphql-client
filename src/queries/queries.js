@@ -35,8 +35,27 @@ const ADD_BOOK = `
     }
 `;
 
+const GET_BOOK = `
+    query GetBook($id: ID){
+        book(id: $id) {
+            id
+            name
+            genre
+            author {
+                id
+                name
+                age
+                books {
+                    name
+                    id
+                }
+            }
+        }
+    }
+`;
 export {
     GET_AUTHORS,
     GET_BOOKS,
-    ADD_BOOK
+    ADD_BOOK,
+    GET_BOOK
 }
